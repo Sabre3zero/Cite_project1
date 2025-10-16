@@ -32,7 +32,7 @@ hr{
   display: grid;
   grid-template-columns: repeat(3, 1fr); 
   gap: 10px; 
-  padding-top: 10px;
+  padding-top: 40px;
 }
 .image-grid img {
   width: 100%;
