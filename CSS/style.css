@@ -18,6 +18,7 @@ hr{
 }
 
 #text-block{
+    width: 100%;
     border-style: solid;
     border-color: black;
     border-width: 1px;
@@ -57,3 +58,34 @@ a:focus {
     margin-left: 30px;
 }
 
+/*testing block*/
+.lng{
+    position: relative;
+    margin-top: 45px;
+}
+
+.lng:hover .lng__list-wrapper{
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+}
+
+.lng__list-wrapper{
+    position: absolute;
+    top: 100%;
+    left: 34%;
+    transform: translate(-50%, 15px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all .2s ease;
+}
+
+.lng__list a{
+    width: 100%;
+    background-color: darkgreen;
+    display: block;
+    padding: 5px 10px;
+    color: black;
+    text-decoration: none;
+}
+/*testing block*/
