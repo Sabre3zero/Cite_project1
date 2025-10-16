@@ -31,7 +31,8 @@ hr{
 .image-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr); 
-  gap: 2px; 
+  gap: 10px; 
+  padding-top: 10px;
 }
 .image-grid img {
   width: 100%;
@@ -46,5 +47,13 @@ a:hover {
 a:focus {
     background-color: darkolivegreen;
     outline: none;
+}
+
+.footer-container{
+    display: flex;
+}
+
+.footer-section{
+    margin-left: 30px;
 }
 
