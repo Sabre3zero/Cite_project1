@@ -1,15 +1,16 @@
 body{
     background-color: darkgreen;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 #menu{
     display: inline;
     padding-left: 45px;
-    text-decoration: none;
 }
 
 #menu a{
     color: black;
+    text-decoration: none;
 }
 
 hr{
