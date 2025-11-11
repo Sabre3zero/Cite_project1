@@ -28,7 +28,7 @@ hr{
 
 .price-table, th, td{
     border-style: solid;
-    border-radius: 1px;
+    border-radius: 10px;
     border-color: black;
 }
 
