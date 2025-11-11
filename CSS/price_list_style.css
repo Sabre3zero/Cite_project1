@@ -31,6 +31,10 @@ hr{
     border-color: black;
 }
 
+.price-table tbody tr:hover{
+    background-color: darkolivegreen;
+}
+
 #menu a:hover {
     background-color: darkolivegreen;
 
