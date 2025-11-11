@@ -17,6 +17,7 @@ hr{
     height: 4px;
     background-color: black;
     color: black;
+    border-color: black;
 } 
 
 #menu a:hover {
