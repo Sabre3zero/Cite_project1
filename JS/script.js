@@ -1,6 +1,4 @@
-import sqlite3 from 'sqlite3';
-import { open } from 'sqlite';
-
+let SQL;
 
 function change(element){
     const tmp = element.textContent;    
@@ -23,29 +21,29 @@ function change(element){
     }
 }
 
-function testDB(){
-    const db = open({
-        filename: 'DB\TeaPopic.db',
-        driver: sqlite3.Database
-    });
 
-    alert(db.exec('SELECT * FROM Price_list'))
+async function testDB() {
+    try {
+        const SQL = await initSQLite();
+
+        const response = await fetch('C:\Users\bcham\Desktop\tea cite\Cite_project1\DB\TeaPopic.db');
+        const arrayBuffer = await response.arrayBuffer();
+        const db = new SQL.Database(new Uint8Array(arrayBuffer));
+
+        const result = db.exec('SELECT * FROM Price_list');
+        console.log(result);
+    } catch(err){
+        console.log('error', err)
+    }
 }
 
+
+testDB();
 
 const editableElements = document.querySelectorAll('.changable')
 
 editableElements.forEach(function(element){
     element.addEventListener('click', function(event){   
         change(element);
-    });
-});
-
-
-const testButton = document.querySelectorAll('.test_button')
-
-testButton.forEach(function(element){
-    element.addEventListener('click', function(event){
-        testDB();
     });
 });
