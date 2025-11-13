@@ -2,7 +2,8 @@ show_menu = true;
 theme_num = 0;
 const links = document.querySelectorAll('a');
 const horlines = document.querySelectorAll('hr');
-const dives = document.querySelectorAll('div');
+const button = document.getElementById('menu_button');
+const text_boxes = document.querySelectorAll('#text-block');
 
 
 function menu() {
@@ -20,6 +21,8 @@ function theme() {
         theme_num = 1;
         document.body.style.backgroundColor='black';
         document.body.style.color='darkgreen';
+        button.style.backgroundColor='darkgreen';
+
 
         links.forEach(link => {
             link.style.color='darkgreen';
@@ -28,10 +31,17 @@ function theme() {
         horlines.forEach(line => {
             line.style.backgroundColor='darkgreen';
         });
+
+        text_boxes.forEach(textbox => {
+            textbox.style.backgroundColor='black';
+            textbox.style.borderColor='darkgreen';
+        });
+
     } else {
         theme_num = 0;
         document.body.style.backgroundColor='darkgreen';
         document.body.style.color='black';
+        button.style.backgroundColor='darkgreen';
 
         links.forEach(link => {
             link.style.color='black';
@@ -39,6 +49,11 @@ function theme() {
 
         horlines.forEach(line => {
             line.style.backgroundColor='black';
+        });
+
+        text_boxes.forEach(textbox => {
+            textbox.style.backgroundColor='green';
+            textbox.style.borderColor='black';
         });
     }
 }
