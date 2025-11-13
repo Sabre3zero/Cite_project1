@@ -1,49 +1,44 @@
-let SQL;
+show_menu = true;
+theme_num = 0;
+const links = document.querySelectorAll('a');
+const horlines = document.querySelectorAll('hr');
+const dives = document.querySelectorAll('div');
 
-function change(element){
-    const tmp = element.textContent;    
 
-    const update = prompt('Enter new text:')
-
-    if (update == "") {
-        if(confirm('Are you sure you whant to clear the text?')){
-            element.textContent = update;
-            }
-        else{
-            element.textContent = tmp;
-        }
-    }
-    else if (!update){
-        element.textContent = tmp;
-    }
-    else {
-        element.textContent = update;
+function menu() {
+    if (show_menu) {
+        show_menu = false;
+        document.getElementById('menu_wrapper').style.visibility="visible";
+    } else {
+        show_menu = true;
+        document.getElementById('menu_wrapper').style.visibility="hidden";
     }
 }
 
+function theme() {
+    if (theme_num == 0) {
+        theme_num = 1;
+        document.body.style.backgroundColor='black';
+        document.body.style.color='darkgreen';
 
-async function testDB() {
-    try {
-        const SQL = await initSQLite();
+        links.forEach(link => {
+            link.style.color='darkgreen';
+        });
 
-        const response = await fetch('C:\Users\bcham\Desktop\tea cite\Cite_project1\DB\TeaPopic.db');
-        const arrayBuffer = await response.arrayBuffer();
-        const db = new SQL.Database(new Uint8Array(arrayBuffer));
+        horlines.forEach(line => {
+            line.style.backgroundColor='darkgreen';
+        });
+    } else {
+        theme_num = 0;
+        document.body.style.backgroundColor='darkgreen';
+        document.body.style.color='black';
 
-        const result = db.exec('SELECT * FROM Price_list');
-        console.log(result);
-    } catch(err){
-        console.log('error', err)
+        links.forEach(link => {
+            link.style.color='black';
+        });
+
+        horlines.forEach(line => {
+            line.style.backgroundColor='black';
+        });
     }
 }
-
-
-testDB();
-
-const editableElements = document.querySelectorAll('.changable')
-
-editableElements.forEach(function(element){
-    element.addEventListener('click', function(event){   
-        change(element);
-    });
-});

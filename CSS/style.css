@@ -3,9 +3,38 @@ body{
     font-family: 'Segoe UI', sans-serif;
 }
 
+header{
+    display: flex;
+}
+
 #menu{
     display: inline;
     padding-left: 45px;
+}
+
+#menu_button{
+    display: inline;
+    margin-left: 74%;
+    margin-top: 15px;
+    font-size: xx-large;
+    width: 40px;
+    height: 40px;
+    background-color: unset;
+}
+
+#menu_wrapper{
+    position: absolute;
+    right: 15px;
+    top: 80px;
+    background-color: darkolivegreen;
+    width: 107px;
+    height: 100px;
+    box-shadow: 5px 5px darkgreen;
+    padding: 10px 10px 10px 10px;
+}
+
+#theme_button{
+    background-color: darkgreen;
 }
 
 #menu a{
@@ -66,7 +95,6 @@ hr{
     color: black;
 }
 
-/*testing block*/
 .lng{
     position: relative;
     margin-top: 45px;
@@ -106,4 +134,3 @@ hr{
     background-color: darkolivegreen;
     outline: none;
 }
-/*testing block*/

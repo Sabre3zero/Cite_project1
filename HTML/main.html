@@ -5,14 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TeaPopic/main</title>
     <link rel="stylesheet" href="../CSS/style.css">
+    <script src="../JS/script.js" defer></script>
 </head>
 <body>
   <header>
       <h2 id="menu"><u>Ассортимент</u></h2>
       <h2 id="menu"><a href="price_list.html">Цены</a></h2>
       <h2 id="menu"><a href="reviewes.html">Отзывы</a></h2>
-      <hr>
+      <button id="menu_button" onclick="menu()">≡</button>
+      <div id="menu_wrapper">
+        <button id="theme_button" onclick="theme()">Change_theme</button>
+      </div>
   </header>
+
+  <hr>
 
   <main>
     <div class="image-grid ">
@@ -71,8 +77,9 @@
       </div>
     </div>
     <!--testing block-->
-    <hr>
   </main>
+
+  <hr>
 
   <footer>
   <div class="footer-container">
