@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .calculator {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        input[type="number"] {
+            padding: 15px;
+            font-size: 1.2em;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            width: 120px;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            border-color: #667eea;
+        }
+
+        select {
+            padding: 15px;
+            font-size: 1.2em;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.3s;
+            min-width: 80px;
+        }
+
+        select:focus {
+            border-color: #667eea;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        #result {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 3px solid #e9ecef;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s;
+        }
+
+        .result-success {
+            background: #d4edda !important;
+            border-color: #c3e6cb !important;
+            color: #155724 !important;
+        }
+
+        .result-error {
+            background: #f8d7da !important;
+            border-color: #f5c6cb !important;
+            color: #721c24 !important;
+        }
+
+        .history {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .history h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        #history-list {
+            list-style: none;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        #history-list li {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            font-family: 'Courier New', monospace;
+        }
+
+        #history-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #history-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        #history-list::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+
+        #history-list::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        @media (max-width: 480px) {
+            .calculator {
+                padding: 20px;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            input[type="number"], select {
+                width: 100%;
+            }
+            
+            #result {
+                font-size: 2em;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>🧮 Калькулятор</h1>
+        
+        <div class="input-group">
+            <input type="number" id="num1" placeholder="Первое число">
+            <select id="operation">
+                <option value="add">+</option>
+                <option value="subtract">-</option>
+                <option value="multiply">×</option>
+                <option value="divide">÷</option>
+            </select>
+            <input type="number" id="num2" placeholder="Второе число">
+        </div>
+        
+        <button id="calculate">Вычислить</button>
+        
+        <div id="result">0</div>
+        
+        <div class="history">
+            <h3>История вычислений:</h3>
+            <ul id="history-list"></ul>
+        </div>
+    </div>
+
+    <script>
+        class Calculator {
+            constructor() {
+                this.num1Input = document.getElementById('num1');
+                this.num2Input = document.getElementById('num2');
+                this.operationSelect = document.getElementById('operation');
+                this.calculateButton = document.getElementById('calculate');
+                this.resultElement = document.getElementById('result');
+                this.historyList = document.getElementById('history-list');
+                
+                this.calculationHistory = [];
+                this.maxHistoryItems = 5;
+                
+                this.init();
+            }
+            
+            init() {
+                this.calculateButton.addEventListener('click', () => this.calculate());
+                
+                this.num1Input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.calculate();
+                });
+                
+                this.num2Input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.calculate();
+                });
+                
+                this.operationSelect.addEventListener('change', () => {
+                    if (this.num1Input.value && this.num2Input.value) {
+                        this.calculate();
+                    }
+                });
+                
+                this.num1Input.addEventListener('input', () => {
+                    if (this.num1Input.value && this.num2Input.value) {
+                        this.calculate();
+                    }
+                });
+                
+                this.num2Input.addEventListener('input', () => {
+                    if (this.num1Input.value && this.num2Input.value) {
+                        this.calculate();
+                    }
+                });
+                
+                console.log('Калькулятор инициализирован');
+            }
+            
+            calculate() {
+                const num1 = parseFloat(this.num1Input.value);
+                const num2 = parseFloat(this.num2Input.value);
+                const operation = this.operationSelect.value;
+                
+                if (isNaN(num1) || isNaN(num2)) {
+                    this.showResult('Введите числа!', 'error');
+                    return;
+                }
+                
+                let result;
+                let operationSymbol;
+                
+                try {
+                    switch (operation) {
+                        case 'add':
+                            result = num1 + num2;
+                            operationSymbol = '+';
+                            break;
+                        case 'subtract':
+                            result = num1 - num2;
+                            operationSymbol = '-';
+                            break;
+                        case 'multiply':
+                            result = num1 * num2;
+                            operationSymbol = '×';
+                            break;
+                        case 'divide':
+                            if (num2 === 0) {
+                                throw new Error('Деление на ноль!');
+                            }
+                            result = num1 / num2;
+                            operationSymbol = '÷';
+                            break;
+                        default:
+                            throw new Error('Неизвестная операция');
+                    }
+                    
+                    result = Math.round(result * 100) / 100;
+                    
+                    this.showResult(result, 'success');
+                    
+                    this.addToHistory(`${num1} ${operationSymbol} ${num2} = ${result}`);
+                    
+                } catch (error) {
+                    this.showResult(error.message, 'error');
+                }
+            }
+            
+            showResult(value, type) {
+                this.resultElement.textContent = value;
+                this.resultElement.className = '';
+                
+                if (type === 'success') {
+                    this.resultElement.classList.add('result-success');
+                } else if (type === 'error') {
+                    this.resultElement.classList.add('result-error');
+                }
+            }
+            
+            addToHistory(calculation) {
+                this.calculationHistory.unshift(calculation);
+                
+                if (this.calculationHistory.length > this.maxHistoryItems) {
+                    this.calculationHistory = this.calculationHistory.slice(0, this.maxHistoryItems);
+                }
+                
+                this.updateHistoryDisplay();
+            }
+            
+            updateHistoryDisplay() {
+                this.historyList.innerHTML = '';
+                
+                this.calculationHistory.forEach(calculation => {
+                    const li = document.createElement('li');
+                    li.textContent = calculation;
+                    this.historyList.appendChild(li);
+                });
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            new Calculator();
+        });
+    </script>
+</body>
+</html>

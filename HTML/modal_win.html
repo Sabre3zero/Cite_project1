@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Модальное окно</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        #show-modal {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        #show-modal:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        #close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2em;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s;
+            line-height: 1;
+        }
+
+        #close-modal:hover {
+            color: #ff4444;
+        }
+
+        .modal-content h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        .modal-content p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        #confirm-btn {
+            padding: 12px 30px;
+            font-size: 1.1em;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            display: block;
+            margin: 0 auto;
+            width: 120px;
+        }
+
+        #confirm-btn:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.7);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal:not(.hidden) .modal-content {
+            animation: modalAppear 0.3s ease;
+        }
+
+        .info {
+            margin-top: 30px;
+            color: white;
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .info p {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 480px) {
+            .modal-content {
+                padding: 20px;
+                margin: 20px;
+            }
+            
+            #close-modal {
+                top: 10px;
+                right: 15px;
+                font-size: 1.8em;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Модальное окно</h1>
+        <button id="show-modal">Показать окно</button>
+        
+        <div class="info">
+            <p>Нажмите кнопку "Показать окно" чтобы открыть модальное окно</p>
+            <p>Закрыть можно: крестиком, кнопкой "OK" или кликом вне окна</p>
+        </div>
+    </div>
+
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <span id="close-modal">&times;</span>
+            <h3>Важное сообщение</h3>
+            <p>Это модальное окно создано на JavaScript!</p>
+            <button id="confirm-btn">OK</button>
+        </div>
+    </div>
+
+    <script>
+        class ModalWindow {
+            constructor() {
+                this.modal = document.getElementById('modal');
+                this.showModalBtn = document.getElementById('show-modal');
+                this.closeModalBtn = document.getElementById('close-modal');
+                this.confirmBtn = document.getElementById('confirm-btn');
+                this.modalContent = document.querySelector('.modal-content');
+                
+                this.init();
+            }
+            
+            init() {
+                this.showModalBtn.addEventListener('click', () => {
+                    this.openModal();
+                });
+                
+                this.closeModalBtn.addEventListener('click', () => {
+                    this.closeModal();
+                });
+                
+                this.confirmBtn.addEventListener('click', () => {
+                    this.closeModal();
+                });
+                
+                this.modal.addEventListener('click', (event) => {
+                    if (event.target === this.modal) {
+                        this.closeModal();
+                    }
+                });
+                
+                document.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape' && !this.modal.classList.contains('hidden')) {
+                        this.closeModal();
+                    }
+                });
+                
+                console.log('Модальное окно инициализировано');
+            }
+            
+            openModal() {
+                this.modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; 
+            }
+            
+            closeModal() {
+                this.modal.classList.add('hidden');
+                document.body.style.overflow = ''; 
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            new ModalWindow();
+        });
+    </script>
+</body>
+</html>
