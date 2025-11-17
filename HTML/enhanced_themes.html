@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>enhanced themes</title>
+</head>
+<body>
+    <style>
+        body.light { background: #fff; color: #000}
+        body.dark { background: #121212; color: #e0e0e0}
+    </style>
+
+    <h1>Меняй тему!</h1>
+    <button id="theme-btn">Тёмная тема</button>
+
+    <script>
+        const body = document.body
+        const themeBtn = document.getElementById('theme-btn')
+
+        const applyTheme = (theme) => {
+            body.className = theme
+            localStorage.setItem('theme', theme)
+            themeBtn.textContent = theme === "light" ? 'Тёмная тема' : 'Светлая тема'
+
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'light'
+        applyTheme(savedTheme)
+
+        themeBtn.addEventListener('click', () => {
+            const newTheme = body.classList.contains('light') ? 'dark' : 'light'
+            applyTheme(newTheme)
+        })
+    </script>
+</body>
+</html>
