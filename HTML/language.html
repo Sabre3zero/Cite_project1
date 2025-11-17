@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>language</title>
+</head>
+<body>
+    <button id="lang-ru">Русский</button>
+    <button id="lang-en">English</button>
+
+    <h1 id="title">Главная страница</h1>
+    <p id="description">Добро пожаловать на наш сайт!</p>
+    <button id="action">Начать</button>
+
+    <script>
+        const swap_flag = true
+
+        const translations = {
+            ru: {
+                title: 'Главная страница',
+                description: 'Добро пожаловать на найш сайт!',
+                action: 'Начать'
+            },
+            en: {
+                title: 'Home page',
+                description: 'Welcome to our website!',
+                action: 'Get started'
+            }
+        }
+
+        let currentLang = 'ru'
+
+        const updateText = () => {
+            document.getElementById('title').textContent = translations[currentLang].title
+            document.getElementById('description').textContent = translations[currentLang].description
+            document.getElementById('action').textContent = translations[currentLang].action
+        }
+
+        document.getElementById('lang-ru').addEventListener('click', () => {
+            currentLang = 'ru'
+            updateText()
+        })
+
+        document.getElementById('lang-en').addEventListener('click', () => {
+            currentLang = 'en'
+            updateText()
+        })
+
+    </script>
+</body>
+</html>
