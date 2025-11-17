@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>rnd_quote</title>
+</head>
+<body>
+    <h2 id="quote-text">Нажми кнопку для цитаты</h2>
+    <p id="quote-author">- ???</p>
+    <button id="rnd_quote_button" onclick="rnd()">Новая цитата</button>
+
+
+    <script>
+        const quotes = [{text: 'Жизнь - это то, что происходит, пока ты строишь планы.', author: 'Джон Леннон'},
+            {text: 'Будь тем изменением, которое хочешь видеть в мире.', author: 'Махатма Ганди'},
+            {text: 'Сложнее всего начать действовать.', author: 'Амелия Эрхарт'},
+            {text: 'Всё, что вам нужно, - это любовь.', author: 'The Beatles'}
+        ]
+
+        const quoteText = document.getElementById('quote-text')
+        const quoteAuthor = document.getElementById('quote-author')
+
+        function rnd(){
+            const randomIndex = Math.floor(Math.random() * quotes.length)
+            const randomQuote = quotes[randomIndex]
+            quoteText.textContent = randomQuote.text
+            quoteAuthor.textContent = randomQuote.author
+        }
+
+    </script>
+</body>
+</html>
