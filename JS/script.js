@@ -6,6 +6,7 @@ const horlines = document.querySelectorAll('hr');
 const button = document.getElementById('menu_button');
 const text_boxes = document.querySelectorAll('#text-block');
 const lng_text = document.querySelectorAll('.lng__list a');
+localStorage.setItem('theme', 1)
 update_theme()
 
 function menu() {
