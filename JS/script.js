@@ -1,10 +1,11 @@
 show_menu = true;
 theme_num = 0;
+document.getElementById('menu_wrapper').style.visibility="hidden";
 const links = document.querySelectorAll('a');
 const horlines = document.querySelectorAll('hr');
 const button = document.getElementById('menu_button');
 const text_boxes = document.querySelectorAll('#text-block');
-
+const lng_text = document.querySelectorAll('.lng__list a');
 
 function menu() {
     if (show_menu) {
@@ -37,6 +38,11 @@ function theme() {
             textbox.style.borderColor='darkgreen';
         });
 
+        lng_text.forEach(text => {
+            text.style.backgroundColor='black';
+            text.style.borderColor='darkgreen';
+        });
+
     } else {
         theme_num = 0;
         document.body.style.backgroundColor='darkgreen';
@@ -54,6 +60,11 @@ function theme() {
         text_boxes.forEach(textbox => {
             textbox.style.backgroundColor='green';
             textbox.style.borderColor='black';
+        });
+
+        lng_text.forEach(text => {
+            text.style.backgroundColor='green';
+            text.style.borderColor='black';
         });
     }
 }

@@ -14,8 +14,9 @@ header{
 
 #menu_button{
     display: inline;
-    margin-left: 74%;
-    margin-top: 15px;
+    position: absolute;
+    right: 15px;
+    top: 15px; 
     font-size: xx-large;
     width: 40px;
     height: 40px;
@@ -50,14 +51,15 @@ hr{
 }
 
 #text-block{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     border-style: solid;
     border-color: black;
     border-width: 1px;
     background-color: green;
-    padding-left: 50%;
     font-size: larger;
-    margin-top: 45px;
 }
 
 
@@ -109,8 +111,8 @@ hr{
 
 .lng__list-wrapper{
     position: absolute;
-    top: 100%;
-    left: 34%;
+    top: 105%;
+    left: 50%;
     transform: translate(-50%, 15px);
     opacity: 0;
     visibility: hidden;
@@ -124,6 +126,23 @@ hr{
     padding: 5px 10px;
     color: black;
     text-decoration: none;
+    border-left: solid;
+    border-right: solid;
+    border-width: 1px;
+}
+
+.lng__list a:first-of-type{
+    border-top: solid;
+    border-left: solid;
+    border-right: solid;
+    border-width: 1px;
+}
+
+.lng__list a:last-of-type{
+    border-bottom: solid;
+    border-left: solid;
+    border-right: solid;
+    border-width: 1px;
 }
 
 .lng__list a:hover{
@@ -134,4 +153,8 @@ hr{
 .lng__list a:focus{
     background-color: darkolivegreen;
     outline: none;
+}
+
+hr{
+    border: none;
 }
